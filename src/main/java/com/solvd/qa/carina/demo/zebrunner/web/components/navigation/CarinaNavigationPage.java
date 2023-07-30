@@ -55,12 +55,7 @@ public class CarinaNavigationPage extends AbstractUIObject {
     public boolean isCarinaHeadingFirstElement() {
         logger.info("Checking if Carina heading is the first element...");
         if (navigationBarNestedTags.size() > 0) {
-            for (ExtendedWebElement element : navigationBarNestedTags) {
-                if (element.getText().equals(carinaHeading.getText())) {
-                    return true;
-                }
-                break;
-            }
+            return navigationBarNestedTags.get(0).getText().equals(carinaHeading.getText());
         }
         return false;
     }
