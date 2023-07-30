@@ -16,7 +16,7 @@ public class ZebRunnerCarinaTest implements IAbstractTest {
         CarinaHomePage homePage = new CarinaHomePage(getDriver());
         homePage.open();
         homePage.assertPageOpened();
-        Assert.assertTrue(homePage.getHeader().isZebRunnerLogoDisplayed(), "Logo validation failed.");
+        Assert.assertTrue(homePage.getHeader().isZebRunnerLogoDisplayed(), "ZebRunner logo is not on the left of the webpage.");
         homePage.getHeader().clickZebRunnerLogo();
         Assert.assertTrue(homePage.isOverviewHeaderVisible(), "Overview header is not visible");
         homePage.assertPageOpened();

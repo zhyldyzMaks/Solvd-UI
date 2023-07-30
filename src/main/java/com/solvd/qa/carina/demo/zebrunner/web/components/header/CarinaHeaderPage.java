@@ -36,10 +36,16 @@ public class CarinaHeaderPage extends CarinaHeaderPageBase {
         super(driver, sc);
     }
 
-    @Override
     public boolean isZebRunnerLogoDisplayed() {
         logger.info("Checking if ZebRunner logo is displayed...");
-        return zebRunnerLogo.isElementPresent();
+        boolean isLogoPresent = zebRunnerLogo.isElementPresent();
+
+        if (isLogoPresent) {
+            int logoX = zebRunnerLogo.getElement().getLocation().getX();
+            int headerX = headerPanel.getElement().getLocation().getX();
+            isLogoPresent = logoX < headerX;
+        }
+        return isLogoPresent;
     }
 
     @Override
