@@ -7,13 +7,20 @@ import com.solvd.qa.carina.demo.zebrunner.web.pages.desktop.GitHubPage;
 import com.zebrunner.carina.core.IAbstractTest;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class ZebRunnerCarinaTest implements IAbstractTest {
 
+    private CarinaHomePage homePage = null;
+
+    @BeforeTest
+    public void startDriver() {
+        homePage = new CarinaHomePage(getDriver());
+    }
+
     @Test
     public void testZebRunnerLogo() {
-        CarinaHomePage homePage = new CarinaHomePage(getDriver());
         homePage.open();
         homePage.assertPageOpened();
         Assert.assertTrue(homePage.getHeader().isZebRunnerLogoDisplayed(), "ZebRunner logo is not on the left of the webpage.");
@@ -24,7 +31,6 @@ public class ZebRunnerCarinaTest implements IAbstractTest {
 
     @Test
     public void testCarinaBrand() {
-        CarinaHomePage homePage = new CarinaHomePage(getDriver());
         homePage.open();
         homePage.assertPageOpened();
         Assert.assertEquals(homePage.getHeader().isCarinaBrandDisplayed(), "Carina");
@@ -32,7 +38,6 @@ public class ZebRunnerCarinaTest implements IAbstractTest {
 
     @Test
     public void testSearchComponent() {
-        CarinaHomePage homePage = new CarinaHomePage(getDriver());
         homePage.open();
         homePage.assertPageOpened();
         homePage.getHeader().isSearchComponentDisplayed();
@@ -42,20 +47,17 @@ public class ZebRunnerCarinaTest implements IAbstractTest {
 
     @Test
     public void testGitHubLink() {
-        CarinaHomePage homePage = new CarinaHomePage(getDriver());
         homePage.open();
         homePage.assertPageOpened();
         ExtendedWebElement gitHubLink = homePage.getHeader().getGitHubLink();
         Assert.assertTrue(gitHubLink.isElementPresent(), "GiHub link is not displayed.");
         gitHubLink.click();
         GitHubPage gitHubPage = new GitHubPage(getDriver());
-        Assert.assertEquals(gitHubPage.getCurrentUrl(), "https://github.com/zebrunner/carina/", "The link " +
-                "did not redirect to Carina Github page");
+        Assert.assertEquals(gitHubPage.getCurrentUrl(), "https://github.com/zebrunner/carina/", "The link " + "did not redirect to Carina Github page");
     }
 
     @Test
     public void testHeaderIsSticky() {
-        CarinaHomePage homePage = new CarinaHomePage(getDriver());
         homePage.open();
         homePage.assertPageOpened();
         homePage.getFooterMenu().scrollIntoFooterMenu();
@@ -64,7 +66,6 @@ public class ZebRunnerCarinaTest implements IAbstractTest {
 
     @Test
     public void testNavigationElementVisibility() {
-        CarinaHomePage homePage = new CarinaHomePage(getDriver());
         homePage.open();
         homePage.assertPageOpened();
         boolean isFirstElementCarina = homePage.getNavigation().isCarinaHeadingFirstElement();
@@ -75,17 +76,14 @@ public class ZebRunnerCarinaTest implements IAbstractTest {
 
     @Test
     public void testHiddenComponents() {
-        CarinaHomePage homePage = new CarinaHomePage(getDriver());
         homePage.open();
         homePage.assertPageOpened();
         Assert.assertTrue(homePage.getNavigation().areElementsHidden(), "Inner elements are not hidden.");
-        Assert.assertTrue(homePage.getNavigation().areNestedElementsRevealed(), "Clicking on parent link " +
-                "did not reveal link/s of nested pages.");
+        Assert.assertTrue(homePage.getNavigation().areNestedElementsRevealed(), "Clicking on parent link " + "did not reveal link/s of nested pages.");
     }
 
     @Test(dataProvider = "navigationLinks", dataProviderClass = NavigationData.class)
     public void testNavigationWorksProperly(String link, String[] lists, boolean nested) {
-        CarinaHomePage homePage = new CarinaHomePage(getDriver());
         homePage.open();
         homePage.assertPageOpened();
         CarinaNavigationPage navigationPage = homePage.getNavigation();
