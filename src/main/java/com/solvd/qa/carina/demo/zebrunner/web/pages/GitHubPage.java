@@ -1,11 +1,11 @@
-package com.solvd.qa.carina.demo.zebrunner.web.pages.desktop;
+package com.solvd.qa.carina.demo.zebrunner.web.pages;
 
-import com.solvd.qa.carina.demo.zebrunner.web.pages.common.GitHubPageBase;
+import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 
-public class GitHubPage extends GitHubPageBase {
+public class GitHubPage extends AbstractPage {
 
     private static final Logger logger = LogManager.getLogger(GitHubPage.class);
 

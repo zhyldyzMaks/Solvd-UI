@@ -1,9 +1,9 @@
 package com.solvd.qa.carina.demo;
 
-import com.solvd.qa.carina.demo.zebrunner.web.components.navigation.CarinaNavigationPage;
-import com.solvd.qa.carina.demo.zebrunner.web.components.navigation.NavigationData;
-import com.solvd.qa.carina.demo.zebrunner.web.pages.desktop.CarinaHomePage;
-import com.solvd.qa.carina.demo.zebrunner.web.pages.desktop.GitHubPage;
+import com.solvd.qa.carina.demo.zebrunner.web.components.navigationMenu.CarinaNavigationPage;
+import com.solvd.qa.carina.demo.zebrunner.web.components.navigationMenu.NavigationData;
+import com.solvd.qa.carina.demo.zebrunner.web.pages.CarinaHomePage;
+import com.solvd.qa.carina.demo.zebrunner.web.pages.GitHubPage;
 import com.zebrunner.carina.core.IAbstractTest;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
@@ -20,73 +20,79 @@ public class ZebRunnerCarinaTest implements IAbstractTest {
     }
 
     @Test
-    public void testZebRunnerLogo() {
+    public void testZebRunnerLogoAndCarinaBrand() {
         homePage.open();
         homePage.assertPageOpened();
-        Assert.assertTrue(homePage.getHeader().isZebRunnerLogoDisplayed(), "ZebRunner logo is not on the left of the webpage.");
-        homePage.getHeader().clickZebRunnerLogo();
-        Assert.assertTrue(homePage.isOverviewHeaderVisible(), "Overview header is not visible");
+        Assert.assertTrue(homePage.getHeaderObject().isZebRunnerLogoOnTheLeft(),
+                "ZebRunner logo is not on the left of the webpage.");
+        homePage.getHeaderObject().clickZebRunnerLogo();
+        Assert.assertTrue(homePage.isOverviewHeaderVisible(),
+                "Overview header is not visible");
         homePage.assertPageOpened();
-    }
-
-    @Test
-    public void testCarinaBrand() {
-        homePage.open();
-        homePage.assertPageOpened();
-        Assert.assertEquals(homePage.getHeader().isCarinaBrandDisplayed(), "Carina");
+        Assert.assertTrue(homePage.getHeaderObject().isCarinaBrandDisplayed(),
+                "Carina brand is not displayed on a header.");
     }
 
     @Test
     public void testSearchComponent() {
         homePage.open();
         homePage.assertPageOpened();
-        homePage.getHeader().isSearchComponentDisplayed();
-        String searchText = homePage.getHeader().getSearchText();
-        Assert.assertEquals(searchText, "Search", "Actual search text does not match the expected value");
+        Assert.assertTrue(homePage.getSearchComponentObject().isSearchComponentDisplayed(),
+                "Search component not displayed.");
+        Assert.assertTrue(homePage.getSearchComponentObject().isSearchIconPresent(),
+                "Search icon is not present in the search input.");
+        Assert.assertTrue(homePage.getSearchComponentObject().isSearchTextPresent(),
+                "Search text is not present in the search input.");
     }
 
     @Test
     public void testGitHubLink() {
         homePage.open();
         homePage.assertPageOpened();
-        ExtendedWebElement gitHubLink = homePage.getHeader().getGitHubLink();
+        ExtendedWebElement gitHubLink = homePage.getHeaderObject().getGitHubLink();
         Assert.assertTrue(gitHubLink.isElementPresent(), "GiHub link is not displayed.");
         gitHubLink.click();
         GitHubPage gitHubPage = new GitHubPage(getDriver());
-        Assert.assertEquals(gitHubPage.getCurrentUrl(), "https://github.com/zebrunner/carina/", "The link " + "did not redirect to Carina Github page");
+        Assert.assertEquals(gitHubPage.getCurrentUrl(),
+                "https://github.com/zebrunner/carina/", "The link did not redirect to Carina Github page");
     }
 
     @Test
     public void testHeaderIsSticky() {
         homePage.open();
         homePage.assertPageOpened();
-        homePage.getFooterMenu().scrollIntoFooterMenu();
-        Assert.assertTrue(homePage.isHeaderSticky(), "Header is not visible or not attached to the top of the page");
+        homePage.getFooterMenuObject().scrollIntoFooterMenu();
+        Assert.assertTrue(homePage.isHeaderSticky(),
+                "Header is not visible or not attached to the top of the page");
     }
 
-    @Test
-    public void testNavigationElementVisibility() {
+    @Test()
+    public void testNavElementVisibilityAndHiddenElementsPresence() {
         homePage.open();
         homePage.assertPageOpened();
-        boolean isFirstElementCarina = homePage.getNavigation().isCarinaHeadingFirstElement();
-        Assert.assertTrue(isFirstElementCarina, "Carina heading is not the first element of the navigation menu.");
-        Assert.assertTrue(homePage.getNavigation().isNavigationLinkListPresent(), "Navigation link list is not present.");
-        Assert.assertTrue(homePage.getNavigation().isHighlighted(), "Current page is not highlighted");
+        Assert.assertTrue(homePage.getNavigationObject().isCarinaHeadingFirstElement(),
+                "Carina heading is not the first element of the navigation menu.");
+        Assert.assertTrue(homePage.getNavigationObject().isNavigationLinkListPresent(),
+                "Navigation links list is not present.");
+        Assert.assertTrue(homePage.getNavigationObject().isCurrentLinkHighlighted(),
+                "Current page is not highlighted");
+        Assert.assertTrue(homePage.getNavigationObject().areNestedElementsHidden(),
+                "Sub-links are not hidden.");
     }
 
-    @Test
-    public void testHiddenComponents() {
+    @Test(dataProvider = "nestedLinksTitles", dataProviderClass = NavigationData.class)
+    public void testSubLinksVisibilityOnParentLinkClick(String title, String[] nestedPageTitles) {
         homePage.open();
         homePage.assertPageOpened();
-        Assert.assertTrue(homePage.getNavigation().areElementsHidden(), "Inner elements are not hidden.");
-        Assert.assertTrue(homePage.getNavigation().areNestedElementsRevealed(), "Clicking on parent link " + "did not reveal link/s of nested pages.");
+        Assert.assertTrue(homePage.getNavigationObject().areNestedElementsRevealed(title, nestedPageTitles),
+                "Clicking on parent link did not reveal link/s of sub-pages.");
     }
 
-    @Test(dataProvider = "navigationLinks", dataProviderClass = NavigationData.class)
-    public void testNavigationWorksProperly(String link, String[] lists, boolean nested) {
+    @Test(dataProvider = "navigationLinksTitles", dataProviderClass = NavigationData.class)
+    public void testNavigationWorksProperly(String title, String[] nestedPageTitles) {
         homePage.open();
         homePage.assertPageOpened();
-        CarinaNavigationPage navigationPage = homePage.getNavigation();
-        navigationPage.isLinkClickRedirectToProperPage(link, lists, nested);
+        CarinaNavigationPage navigationPage = homePage.getNavigationObject();
+        navigationPage.checkLinkRedirection(title, nestedPageTitles);
     }
 }

@@ -1,22 +1,21 @@
-package com.solvd.qa.carina.demo.zebrunner.web.pages.desktop;
+package com.solvd.qa.carina.demo.zebrunner.web.pages;
 
-import com.solvd.qa.carina.demo.zebrunner.web.components.footer.CarinaFooterMenu;
+import com.solvd.qa.carina.demo.zebrunner.web.components.footerMenu.CarinaFooterMenu;
 import com.solvd.qa.carina.demo.zebrunner.web.components.header.CarinaHeaderPage;
-import com.solvd.qa.carina.demo.zebrunner.web.components.navigation.CarinaNavigationPage;
-import com.solvd.qa.carina.demo.zebrunner.web.pages.common.CarinaHomePageBase;
-import com.zebrunner.carina.utils.factory.DeviceType;
+import com.solvd.qa.carina.demo.zebrunner.web.components.navigationMenu.CarinaNavigationPage;
+import com.solvd.qa.carina.demo.zebrunner.web.components.searchComponent.CarinaSearchComponentPage;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
-@DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = CarinaHomePageBase.class)
-public class CarinaHomePage extends CarinaHomePageBase {
+public class CarinaHomePage extends AbstractPage {
 
     private static final Logger logger = LogManager.getLogger(CarinaHomePage.class);
 
-    @FindBy(css = "header.md-header")
+    @FindBy(css = ".md-header")
     private CarinaHeaderPage header;
 
     @FindBy(xpath = "//div[@class='md-footer-meta md-typeset']")
@@ -25,6 +24,9 @@ public class CarinaHomePage extends CarinaHomePageBase {
     @FindBy(xpath = "//div[@class='md-sidebar md-sidebar--primary']")
     private CarinaNavigationPage navigation;
 
+    @FindBy(css = ".md-search")
+    private CarinaSearchComponentPage searchComponent;
+
     @FindBy(css = "h1#overview")
     private ExtendedWebElement overviewHeader;
 
@@ -32,21 +34,24 @@ public class CarinaHomePage extends CarinaHomePageBase {
         super(driver);
     }
 
-    public CarinaHeaderPage getHeader() {
+    public CarinaHeaderPage getHeaderObject() {
         return header;
     }
 
-    public CarinaFooterMenu getFooterMenu() {
+    public CarinaFooterMenu getFooterMenuObject() {
         return footerMenu;
     }
 
-    public CarinaNavigationPage getNavigation() {
+    public CarinaNavigationPage getNavigationObject() {
         return navigation;
+    }
+
+    public CarinaSearchComponentPage getSearchComponentObject() {
+        return searchComponent;
     }
 
     public boolean isOverviewHeaderVisible() {
         logger.info("Checking if the overview header is visible...");
-        navigation.clickGettingStartedLink();
         header.clickZebRunnerLogo();
         return overviewHeader.isVisible();
     }
