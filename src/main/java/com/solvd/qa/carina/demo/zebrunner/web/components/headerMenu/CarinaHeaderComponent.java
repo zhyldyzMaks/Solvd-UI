@@ -1,4 +1,4 @@
-package com.solvd.qa.carina.demo.zebrunner.web.components.header;
+package com.solvd.qa.carina.demo.zebrunner.web.components.headerMenu;
 
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
@@ -8,23 +8,23 @@ import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
-public class CarinaHeaderPage extends AbstractUIObject {
+public class CarinaHeaderComponent extends AbstractUIObject {
 
-    private static final Logger logger = LogManager.getLogger(CarinaHeaderPage.class);
+    private static final Logger logger = LogManager.getLogger(CarinaHeaderComponent.class);
 
-    @FindBy(xpath = "//a[@aria-label='Carina']//img")
+    @FindBy(xpath = ".//a[@class='md-header-nav__button md-logo']")
     private ExtendedWebElement zebRunnerLogo;
 
-    @FindBy(xpath = "//span[contains(text(),'Carina')]")
+    @FindBy(xpath = ".//span[contains(text(),'Carina')]")
     private ExtendedWebElement carinaBrandText;
 
-    @FindBy(xpath = "//div[@class='md-header-nav__source']//a[@title='Go to repository']")
+    @FindBy(xpath = ".//div[@class='md-header-nav__source']//a[@title='Go to repository']")
     private ExtendedWebElement gitHubLink;
 
     @FindBy(css = ".md-header-nav__ellipsis")
     private ExtendedWebElement headerPanel;
 
-    public CarinaHeaderPage(WebDriver driver, SearchContext sc) {
+    public CarinaHeaderComponent(WebDriver driver, SearchContext sc) {
         super(driver, sc);
     }
 
@@ -35,10 +35,9 @@ public class CarinaHeaderPage extends AbstractUIObject {
         return logoX < headerX;
     }
 
-    public boolean isCarinaBrandDisplayed() {
+    public String getBrandText() {
         logger.info("Checking if Carina brand is displayed...");
-        String brandText = carinaBrandText.getText();
-        return brandText.equals("Carina");
+        return carinaBrandText.getText();
     }
 
     public String validateGitHubPageUrl() {

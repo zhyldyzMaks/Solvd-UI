@@ -1,8 +1,8 @@
 package com.solvd.qa.carina.demo.zebrunner.web.pages;
 
 import com.solvd.qa.carina.demo.zebrunner.web.components.footerMenu.CarinaFooterMenu;
-import com.solvd.qa.carina.demo.zebrunner.web.components.header.CarinaHeaderPage;
-import com.solvd.qa.carina.demo.zebrunner.web.components.navigationMenu.CarinaNavigationPage;
+import com.solvd.qa.carina.demo.zebrunner.web.components.headerMenu.CarinaHeaderComponent;
+import com.solvd.qa.carina.demo.zebrunner.web.components.navigationMenu.CarinaNavigationComponent;
 import com.solvd.qa.carina.demo.zebrunner.web.components.searchComponent.CarinaSearchComponentPage;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
@@ -16,13 +16,13 @@ public class CarinaHomePage extends AbstractPage {
     private static final Logger logger = LogManager.getLogger(CarinaHomePage.class);
 
     @FindBy(css = ".md-header")
-    private CarinaHeaderPage header;
+    private CarinaHeaderComponent header;
 
     @FindBy(xpath = "//div[@class='md-footer-meta md-typeset']")
     private CarinaFooterMenu footerMenu;
 
     @FindBy(xpath = "//div[@class='md-sidebar md-sidebar--primary']")
-    private CarinaNavigationPage navigation;
+    private CarinaNavigationComponent navigation;
 
     @FindBy(css = ".md-search")
     private CarinaSearchComponentPage searchComponent;
@@ -34,7 +34,7 @@ public class CarinaHomePage extends AbstractPage {
         super(driver);
     }
 
-    public CarinaHeaderPage getHeaderObject() {
+    public CarinaHeaderComponent getHeaderObject() {
         return header;
     }
 
@@ -42,7 +42,7 @@ public class CarinaHomePage extends AbstractPage {
         return footerMenu;
     }
 
-    public CarinaNavigationPage getNavigationObject() {
+    public CarinaNavigationComponent getNavigationObject() {
         return navigation;
     }
 

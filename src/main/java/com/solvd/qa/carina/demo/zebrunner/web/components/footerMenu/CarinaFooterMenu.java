@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class CarinaFooterMenu extends AbstractUIObject {
 
-    @FindBy(xpath = "//div[contains(text(),'2022 Zebrunner')]")
+    @FindBy(xpath = ".//div[contains(text(),'2022 Zebrunner')]")
     private ExtendedWebElement footerCopyRightElement;
 
     public CarinaFooterMenu(WebDriver driver, SearchContext sc) {

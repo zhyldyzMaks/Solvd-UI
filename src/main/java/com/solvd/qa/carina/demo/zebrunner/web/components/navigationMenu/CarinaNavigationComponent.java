@@ -13,38 +13,38 @@ import org.testng.Assert;
 import java.util.Arrays;
 import java.util.List;
 
-public class CarinaNavigationPage extends AbstractUIObject {
+public class CarinaNavigationComponent extends AbstractUIObject {
 
-    private static final Logger logger = LogManager.getLogger(CarinaNavigationPage.class);
+    private static final Logger logger = LogManager.getLogger(CarinaNavigationComponent.class);
 
-    @FindBy(xpath = "//nav[@aria-label='Navigation']//label[@for='__drawer']")
+    @FindBy(xpath = ".//nav[@aria-label='Navigation']//label[@for='__drawer']")
     private ExtendedWebElement carinaHeading;
 
-    @FindBy(xpath = "//li[contains(@class, '%s')]")
+    @FindBy(xpath = ".//li[contains(@class, '%s')]")
     private ExtendedWebElement curPageDynamicXpath;
 
-    @FindBy(xpath = "//li[contains(@class,'md-nav__item')]//*[contains(text(),'%s')]")
+    @FindBy(xpath = ".//li[contains(@class,'md-nav__item')]//*[contains(text(),'%s')]")
     private ExtendedWebElement title;
 
-    @FindBy(xpath = "(//li[@class='md-nav__item']//*[contains(text(),'Mobile')])[2]")
+    @FindBy(xpath = "(.//li[@class='md-nav__item']//*[contains(text(),'Mobile')])[2]")
     private ExtendedWebElement mobileLinkInAdvanced;
 
-    @FindBy(xpath = "//nav[@aria-label='Navigation']/*")
+    @FindBy(xpath = ".//nav[@aria-label='Navigation']/*")
     private List<ExtendedWebElement> navigationBarNestedTags;
 
-    @FindBy(xpath = "//li[contains(@class, 'md-nav__item')]")
+    @FindBy(xpath = ".//li[contains(@class, 'md-nav__item')]")
     private List<ExtendedWebElement> allNavLinks;
 
-    @FindBy(xpath = "//li[contains(@class,'md-nav__item md-nav__item--nested')]")
+    @FindBy(xpath = ".//li[contains(@class,'md-nav__item md-nav__item--nested')]")
     private List<ExtendedWebElement> parentLinks;
 
-    @FindBy(xpath = "//li[contains(@class,'nested')]//li[@class='md-nav__item']/a")
+    @FindBy(xpath = ".//li[contains(@class,'nested')]//li[@class='md-nav__item']/a")
     private List<ExtendedWebElement> nestedLinks;
 
-    @FindBy(xpath = "//nav[@aria-label='Navigation']/ul/li")
+    @FindBy(xpath = ".//nav[@aria-label='Navigation']/ul/li")
     private List<ExtendedWebElement> allOuterLinks;
 
-    public CarinaNavigationPage(WebDriver driver, SearchContext searchContext) {
+    public CarinaNavigationComponent(WebDriver driver, SearchContext searchContext) {
         super(driver, searchContext);
     }
 

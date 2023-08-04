@@ -1,12 +1,13 @@
 package com.solvd.qa.carina.demo;
 
-import com.solvd.qa.carina.demo.zebrunner.web.components.navigationMenu.CarinaNavigationPage;
+import com.solvd.qa.carina.demo.zebrunner.web.components.navigationMenu.CarinaNavigationComponent;
 import com.solvd.qa.carina.demo.zebrunner.web.components.navigationMenu.NavigationData;
 import com.solvd.qa.carina.demo.zebrunner.web.pages.CarinaHomePage;
 import com.zebrunner.carina.core.IAbstractTest;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class ZebRunnerCarinaTest implements IAbstractTest {
 
@@ -27,7 +28,7 @@ public class ZebRunnerCarinaTest implements IAbstractTest {
         Assert.assertTrue(homePage.isOverviewHeaderVisible(),
                 "Overview header is not visible");
         homePage.assertPageOpened();
-        Assert.assertTrue(homePage.getHeaderObject().isCarinaBrandDisplayed(),
+        Assert.assertEquals(homePage.getHeaderObject().getBrandText(), "Carina",
                 "Carina brand is not displayed on a header.");
     }
 
@@ -35,12 +36,14 @@ public class ZebRunnerCarinaTest implements IAbstractTest {
     public void testSearchComponent() {
         homePage.open();
         homePage.assertPageOpened();
-        Assert.assertTrue(homePage.getSearchComponentObject().isSearchComponentDisplayed(),
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(homePage.getSearchComponentObject().isSearchComponentDisplayed(),
                 "Search component not displayed.");
-        Assert.assertTrue(homePage.getSearchComponentObject().isSearchIconPresent(),
+        softAssert.assertTrue(homePage.getSearchComponentObject().isSearchIconPresent(),
                 "Search icon is not present in the search input.");
-        Assert.assertTrue(homePage.getSearchComponentObject().isSearchTextPresent(),
+        softAssert.assertTrue(homePage.getSearchComponentObject().isSearchTextPresent(),
                 "Search text is not present in the search input.");
+        softAssert.assertAll();
     }
 
     @Test
@@ -87,7 +90,7 @@ public class ZebRunnerCarinaTest implements IAbstractTest {
     public void testNavigationWorksProperly(String title, String[] nestedPageTitles) {
         homePage.open();
         homePage.assertPageOpened();
-        CarinaNavigationPage navigationPage = homePage.getNavigationObject();
+        CarinaNavigationComponent navigationPage = homePage.getNavigationObject();
         navigationPage.checkLinkRedirection(title, nestedPageTitles);
     }
 }
