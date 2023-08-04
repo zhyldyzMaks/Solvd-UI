@@ -3,9 +3,7 @@ package com.solvd.qa.carina.demo;
 import com.solvd.qa.carina.demo.zebrunner.web.components.navigationMenu.CarinaNavigationPage;
 import com.solvd.qa.carina.demo.zebrunner.web.components.navigationMenu.NavigationData;
 import com.solvd.qa.carina.demo.zebrunner.web.pages.CarinaHomePage;
-import com.solvd.qa.carina.demo.zebrunner.web.pages.GitHubPage;
 import com.zebrunner.carina.core.IAbstractTest;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -49,12 +47,8 @@ public class ZebRunnerCarinaTest implements IAbstractTest {
     public void testGitHubLink() {
         homePage.open();
         homePage.assertPageOpened();
-        ExtendedWebElement gitHubLink = homePage.getHeaderObject().getGitHubLink();
-        Assert.assertTrue(gitHubLink.isElementPresent(), "GiHub link is not displayed.");
-        gitHubLink.click();
-        GitHubPage gitHubPage = new GitHubPage(getDriver());
-        Assert.assertEquals(gitHubPage.getCurrentUrl(),
-                "https://github.com/zebrunner/carina/", "The link did not redirect to Carina Github page");
+        Assert.assertEquals(homePage.getHeaderObject().validateGitHubPageUrl(),
+                "https://github.com/zebrunner/carina/");
     }
 
     @Test

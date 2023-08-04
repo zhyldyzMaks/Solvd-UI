@@ -41,12 +41,13 @@ public class CarinaHeaderPage extends AbstractUIObject {
         return brandText.equals("Carina");
     }
 
-    public void clickZebRunnerLogo() {
-        zebRunnerLogo.click();
+    public String validateGitHubPageUrl() {
+        gitHubLink.click();
+        return driver.getCurrentUrl().trim();
     }
 
-    public ExtendedWebElement getGitHubLink() {
-        return gitHubLink;
+    public void clickZebRunnerLogo() {
+        zebRunnerLogo.click();
     }
 
     public ExtendedWebElement getHeaderPanel() {
