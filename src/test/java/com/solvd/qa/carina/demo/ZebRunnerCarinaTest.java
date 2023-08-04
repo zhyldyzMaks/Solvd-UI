@@ -48,7 +48,8 @@ public class ZebRunnerCarinaTest implements IAbstractTest {
         homePage.open();
         homePage.assertPageOpened();
         Assert.assertEquals(homePage.getHeaderObject().validateGitHubPageUrl(),
-                "https://github.com/zebrunner/carina/");
+                "https://github.com/zebrunner/carina/",
+                "Clicking on GitHub link did not redirect to GitHub page.");
     }
 
     @Test
